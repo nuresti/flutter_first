@@ -6,7 +6,7 @@ class HomeController extends State<HomeView> {
   int counter = 0;
   void incrementCounter() {
     setState(() {
-      counter += 2;
+      counter += 10;
     });
   }
   //end controller
