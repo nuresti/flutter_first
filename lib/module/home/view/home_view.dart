@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../../../shared/util/CurrencyConverter.dart';
+import 'package:flutter_first/shared/util/data_encryptor.dart';
+import 'package:flutter_first/shared/util/validator.dart';
 import '../controller/home_controller.dart';
 
 class HomeView extends StatefulWidget {
@@ -13,6 +13,14 @@ class HomeView extends StatefulWidget {
     BuildContext context,
     HomeController controller,
   ) {
+    var password = "123456";
+    var hexPassword = DataEncryptor.encrypt(password);
+
+    String email = "demo@dadang.com";
+    String name = "Nuresti Aurelia";
+
+    bool isValid = Validator.isValidEmail(email);
+    bool isValidName = Validator.isValidName(name);
     return Scaffold(
       appBar: AppBar(
         title: const Text("HomeView"),
@@ -21,42 +29,32 @@ class HomeView extends StatefulWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var item = controller.products[index];
-                  //Representasi data dalam bentuk Map
-                  // User user = User(
-                  //     id: item["id"],
-                  //     email: item["email"],
-                  //     firstName: item["first_name"],
-                  //     avatar: item["avatar"]);
-                  // User user = User.fromJson(item);
-                  // Product products = Product();
-                  //CTRL+ALT+SHIFT+B
-                  String price = CurrencyConverter.format(item['price']);
-                  String createdAt =
-                      DateFormat("d MMM y").format(item['created_at']);
-                  return Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.grey[200],
-                        backgroundImage: NetworkImage(
-                          // item["avatar"],
-                          // user.avatar,
-                          item["product_name"],
-                        ),
-                      ),
-                      title: Text(item["product_name"]),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [Text(price), Text(createdAt)],
-                      ),
-                    ),
-                  );
-                },
+            Text(
+              "isValidName : $isValidName",
+              style:
+                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              controller.total.toString(),
+              style:
+                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
               ),
+              onPressed: () => controller.doSaveFile("Hello World"),
+              child: const Text("Save"),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
+              ),
+              onPressed: () => controller.doGeneratePdf(),
+              child: const Text("Generate PDF"),
             ),
           ],
         ),

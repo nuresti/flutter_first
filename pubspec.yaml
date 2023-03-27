@@ -40,6 +40,8 @@ dependencies:
   json_annotation: ^4.8.0
   decimal: ^2.3.2
   intl: ^0.18.0
+  crypto: ^3.0.2
+  pdf: ^3.10.0
 
 dev_dependencies:
   flutter_test:
